@@ -1,0 +1,400 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Color x:Key="RawColorPrimary">#2C3E50</Color>
+    <Color x:Key="RawColorBackground">#F5F6FA</Color>
+    <Color x:Key="RawColorBorder">#2C3150</Color>
+    <Color x:Key="RawColorAccent">#3498DB</Color>
+    <Color x:Key="RawColorAccentHover">#2980B9</Color>
+    <Color x:Key="RawColorTextPrimary">#2C3E50</Color>
+    <Color x:Key="RawColorTextWhite">#F5F6FA</Color> 
+    <Color x:Key="RawColorSecondary">#ECF0F1</Color>
+    <Color x:Key="RawColorPrimaryHover">#304458</Color>
+    <SolidColorBrush x:Key="ColorPrimaryHover" Color="{StaticResource RawColorPrimaryHover}"/>
+    <SolidColorBrush x:Key="ColorPrimary" Color="{StaticResource RawColorPrimary}"/>
+    <SolidColorBrush x:Key="ColorBackground" Color="{StaticResource RawColorBackground}"/>
+    <SolidColorBrush x:Key="ColorBorder" Color="{StaticResource RawColorBorder}"/>
+    <SolidColorBrush x:Key="ColorAccent" Color="{StaticResource RawColorAccent}"/>
+    <SolidColorBrush x:Key="ColorAccentHover" Color="{StaticResource RawColorAccentHover}"/>
+    <SolidColorBrush x:Key="ColorTextPrimary" Color="{StaticResource RawColorTextPrimary}"/>
+    <SolidColorBrush x:Key="ColorTextWhite" Color="{StaticResource RawColorTextWhite}"/>
+    <SolidColorBrush x:Key="ColorSecondary" Color="{StaticResource RawColorSecondary}"/>
+
+    <Style x:Key="MainButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="{StaticResource ColorAccent}"/>
+        <Setter Property="Foreground" Value="{StaticResource ColorTextWhite}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ColorBorder}"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Padding" Value="15,8"/>
+        <Setter Property="FontFamily" Value="Roboto"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="border" 
+                            CornerRadius="4" 
+                            BorderBrush="{TemplateBinding BorderBrush}" 
+                            BorderThickness="{TemplateBinding BorderThickness}" 
+                            SnapsToDevicePixels="true">
+                        <ContentPresenter x:Name="contentPresenter" 
+                                          Focusable="False" 
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                          Margin="{TemplateBinding Padding}" 
+                                          RecognizesAccessKey="True" 
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        <Border.Background>
+                            <SolidColorBrush Color="{StaticResource RawColorAccent}" x:Name="Brush"/>
+                        </Border.Background>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Opacity" Value=".56"/>
+                        </Trigger>
+                        <EventTrigger RoutedEvent="MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation Storyboard.TargetProperty="Color" 
+                                                    Storyboard.TargetName="Brush" 
+                                                    To="{StaticResource RawColorAccentHover}" 
+                                                    Duration="0:0:0.2"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="MouseLeave">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation Storyboard.TargetProperty="Color" 
+                                                    Storyboard.TargetName="Brush" 
+                                                    To="{StaticResource RawColorAccent}" 
+                                                    Duration="0:0:0.2"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="MenuButtonStyle" TargetType="{x:Type RadioButton}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="RadioButton">
+                    <Border x:Name="BackgroundBorder" BorderThickness="0" Cursor="Hand">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="4"/>
+                            </Grid.ColumnDefinitions>
+                            <Border Grid.Column="1" x:Name="AccentLineBorder" Height="0" CornerRadius="2" HorizontalAlignment="Right" Width="4" Background="{StaticResource ColorAccent}"/>
+                            <ContentPresenter Grid.Column="0" VerticalAlignment="Center"/>
+                        </Grid>
+                        <Border.Background>
+                            <SolidColorBrush Color="{StaticResource RawColorPrimary}" x:Name="Brush"/>
+                        </Border.Background>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter Property="Background">
+                                <Setter.Value>
+                                    <SolidColorBrush Color="{StaticResource RawColorAccentHover}"/>
+                                </Setter.Value>
+                            </Setter>
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="Brush" Storyboard.TargetProperty="Color" To="{StaticResource RawColorAccentHover}" Duration="0:0:0.2"/>
+                                        <DoubleAnimation Storyboard.TargetName="AccentLineBorder" Storyboard.TargetProperty="Height" To="50" Duration="0:0:0.2"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="Brush" Storyboard.TargetProperty="Color" To="{StaticResource RawColorPrimary}" Duration="0:0:0.2"/>
+                                        <DoubleAnimation Storyboard.TargetName="AccentLineBorder" Storyboard.TargetProperty="Height" To="0" Duration="0:0:0.2"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="BlankButton" TargetType="{x:Type Button}">
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Height" Value="50"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border BorderThickness="{TemplateBinding BorderThickness}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <Border.Background>
+                            <SolidColorBrush Color="{StaticResource RawColorPrimary}" x:Name="Brush"/>
+                        </Border.Background>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetProperty="Color" Storyboard.TargetName="Brush" To="{StaticResource RawColorPrimaryHover}" Duration="0:0:0.2"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetProperty="Color" Storyboard.TargetName="Brush" To="{StaticResource RawColorPrimary}" Duration="0:0:0.2"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ControlButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True"/>
+        <Setter Property="Width" Value="50"/>
+        <Setter Property="Height" Value="40"/>
+        <Setter Property="Foreground" Value="{StaticResource ColorTextWhite}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Padding" Value="5"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource ColorPrimaryHover}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="SecondaryButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{StaticResource ColorTextPrimary}"/>
+        <Setter Property="BorderBrush" Value="#BDC3C7"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Padding" Value="15,8"/>
+        <Setter Property="FontFamily" Value="Roboto"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="border" CornerRadius="4" 
+                        Background="{TemplateBinding Background}" 
+                        BorderBrush="{TemplateBinding BorderBrush}" 
+                        BorderThickness="{TemplateBinding BorderThickness}">
+                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <Border.Background>
+                            <SolidColorBrush Color="Transparent" x:Name="Brush"/>
+                        </Border.Background>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Opacity" Value=".56"/>
+                        </Trigger>
+                        <EventTrigger RoutedEvent="MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation Storyboard.TargetProperty="Color" 
+                                                    Storyboard.TargetName="Brush" 
+                                                    To="{StaticResource RawColorSecondary}" 
+                                                    Duration="0:0:0.2"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="MouseLeave">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation Storyboard.TargetProperty="Color" 
+                                                    Storyboard.TargetName="Brush" 
+                                                    To="Transparent" 
+                                                    Duration="0:0:0.2"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="CloseButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="Content" Value="✕"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="#A0A0A0"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Padding" Value="5"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Foreground" Value="#E74C3C"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="MainDataGridStyle" TargetType="{x:Type DataGrid}">
+        <Setter Property="Background" Value="White"/>
+        <Setter Property="RowBackground" Value="White"/>
+        <Setter Property="AlternatingRowBackground" Value="#F2F2F2"/>
+        <Setter Property="HeadersVisibility" Value="Column"/>
+        <Setter Property="GridLinesVisibility" Value="Horizontal"/>
+        <Setter Property="HorizontalGridLinesBrush" Value="#E0E0E0"/>
+        <Setter Property="FontFamily" Value="Roboto"/>
+        <Setter Property="RowHeight" Value="30"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="#Dcdcdc"/>
+    </Style>
+
+    <Style x:Key="DataGridHeaderStyle" TargetType="{x:Type DataGridColumnHeader}">
+        <Setter Property="Background" Value="{StaticResource ColorPrimary}"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Padding" Value="10,5"/>
+        <Setter Property="FontFamily" Value="Roboto"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="Height" Value="35"/>
+    </Style>
+
+    <Style x:Key="TextBoxStyle" TargetType="{x:Type TextBox}">
+        <Setter Property="Background" Value="{StaticResource ColorBackground}"/>
+        <Setter Property="Foreground" Value="{StaticResource ColorTextPrimary}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ColorBorder}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Padding" Value="10,8"/>
+        <Setter Property="FontFamily" Value="Roboto"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TextBox}">
+                    <Border x:Name="border"
+                        CornerRadius="4"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}">
+                        <Grid>
+                            <ScrollViewer x:Name="PART_ContentHost" 
+                                      Focusable="false" 
+                                      HorizontalScrollBarVisibility="Hidden" 
+                                      VerticalScrollBarVisibility="Hidden"/>
+                            <TextBlock x:Name="PlaceholderText"
+                                   Text="{TemplateBinding Tag}"
+                                   Foreground="Gray"
+                                   Opacity="0.6"
+                                   Margin="{TemplateBinding Padding}"
+                                   IsHitTestVisible="False"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Left"
+                                   Visibility="Collapsed"/>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Text" Value="">
+                            <Setter TargetName="PlaceholderText" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter TargetName="PlaceholderText" Property="Visibility" Value="Collapsed"/>
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ColorAccent}"/>
+                            <Setter TargetName="border" Property="BorderThickness" Value="2"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="MainTextBlockStyle" TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="{StaticResource ColorTextWhite}"/>
+        <Setter Property="FontFamily" Value="Roboto"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+    </Style>
+
+    <Style x:Key="PasswordBoxStyle" TargetType="{x:Type PasswordBox}">
+        <Setter Property="Background" Value="{StaticResource ColorBackground}"/>
+        <Setter Property="Foreground" Value="{StaticResource ColorTextPrimary}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ColorBorder}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Padding" Value="10,8"/>
+        <Setter Property="FontFamily" Value="Roboto"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type PasswordBox}">
+                    <Border x:Name="border"
+                        CornerRadius="4"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}">
+                        <Grid>
+                            <ScrollViewer x:Name="PART_ContentHost"
+                                      Focusable="false"
+                                      HorizontalScrollBarVisibility="Hidden"
+                                      VerticalScrollBarVisibility="Hidden"/>
+                            <TextBlock x:Name="Watermark"
+                                   Text="{TemplateBinding Tag}"
+                                   Foreground="Gray"
+                                   Opacity="0.6"
+                                   Margin="{TemplateBinding Padding}"
+                                   IsHitTestVisible="False"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Left"
+                                   Visibility="Collapsed"/>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Tag" Value="">
+                            <Setter TargetName="Watermark" Property="Visibility" Value="Collapsed"/>
+                        </Trigger>
+                        <Trigger Property="Tag" Value="{x:Null}">
+                            <Setter TargetName="Watermark" Property="Visibility" Value="Collapsed"/>
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter TargetName="Watermark" Property="Visibility" Value="Collapsed"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ColorAccent}"/>
+                            <Setter TargetName="border" Property="BorderThickness" Value="2"/>
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="False">
+                            <Setter TargetName="Watermark" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>
