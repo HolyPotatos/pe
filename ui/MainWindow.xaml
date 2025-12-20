@@ -78,7 +78,7 @@
                         </Button>
                     </Grid>
                 </Border>
-                <ContentControl/>
+                <ContentControl Grid.Column="1" x:Name="MainContentControl" Background="{StaticResource ColorBackground}"/>
             </Grid>
         </Grid>
     </Border>

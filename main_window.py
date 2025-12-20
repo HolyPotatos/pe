@@ -7,6 +7,9 @@ class MainWindow:
     def __init__(self):
         self.window = load_xaml("MainWindow.xaml")
         self.set_events()
+        self.order_content = load_xaml("OrdersView.xaml")
+        self.warehouse_content = load_xaml("WarehouseView.xaml")
+        self.navigate(self.order_content)
 
     def set_events(self):
         self.btn_close = self.window.FindName("BtnClose")
@@ -15,10 +18,13 @@ class MainWindow:
         self.rbtn_warehouse = self.window.FindName("RBtnWarehouseRadio")
         self.rbtn_order = self.window.FindName("RBtnOrderRadio")
         self.btn_logout = self.window.FindName("BtnLogout")
+        self.content_control = self.window.FindName("MainContentControl")
         self.btn_close.Click += lambda s, e: self.window.Close()
         self.btn_minimized.Click += self.minimized_window
         self.btn_maximized.Click += self.maximized_window
         self.btn_logout.Click += self.logout
+        self.rbtn_order.Click += lambda s, e: self.navigate(self.order_content)
+        self.rbtn_warehouse.Click += lambda s, e: self.navigate(self.warehouse_content)
 
     def maximized_window(self, sender, e):
         if self.window.WindowState == WindowState.Maximized:
@@ -28,6 +34,9 @@ class MainWindow:
 
     def minimized_window(self, sender, e):
         self.window.WindowState = WindowState.Minimized
+    
+    def navigate(self, view):
+        self.content_control.Content = view
 
     def logout(self, sender, e):
         if show_message("Предупреждение","Вы действительно хотите выйти?","warning","yesno") == "yes":

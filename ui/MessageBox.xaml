@@ -5,8 +5,7 @@
         WindowStyle="None" 
         ResizeMode="NoResize"
         AllowsTransparency="True"
-        Background="Transparent"
-        Topmost="True"> 
+        Background="Transparent"> 
     <Window.Resources>
         <ResourceDictionary Source="ResourceDictionary.xaml"/>
     </Window.Resources>

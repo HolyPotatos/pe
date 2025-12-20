@@ -190,7 +190,7 @@
     </Style>
 
     <Style x:Key="SecondaryButtonStyle" TargetType="{x:Type Button}">
-        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Background" Value="{StaticResource ColorBackground}"/>
         <Setter Property="Foreground" Value="{StaticResource ColorTextPrimary}"/>
         <Setter Property="BorderBrush" Value="#BDC3C7"/>
         <Setter Property="BorderThickness" Value="1"/>
@@ -207,7 +207,7 @@
                         BorderThickness="{TemplateBinding BorderThickness}">
                     <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         <Border.Background>
-                            <SolidColorBrush Color="Transparent" x:Name="Brush"/>
+                            <SolidColorBrush Color="{StaticResource RawColorBackground}" x:Name="Brush"/>
                         </Border.Background>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -229,7 +229,7 @@
                                 <Storyboard>
                                     <ColorAnimation Storyboard.TargetProperty="Color" 
                                                     Storyboard.TargetName="Brush" 
-                                                    To="Transparent" 
+                                                    To="{StaticResource RawColorBackground}" 
                                                     Duration="0:0:0.2"/>
                                 </Storyboard>
                             </BeginStoryboard>
