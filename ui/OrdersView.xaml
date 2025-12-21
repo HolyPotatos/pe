@@ -19,7 +19,6 @@
             <Button x:Name="BtnNewOrder" Style="{StaticResource SecondaryButtonStyle}" Margin="0,0,0,10" Content="Новый заказ" Width="150" Height="45"/>
             <Button x:Name="BtnOrderHistory" IsEnabled="False" Style="{StaticResource SecondaryButtonStyle}" Margin="0,0,0,10" Content="История заказа" Width="150" Height="45"/>
             <Button x:Name="BtnOrderCansel" IsEnabled="False" Style="{StaticResource SecondaryButtonStyle}" Margin="0,0,0,10" Content="Отменить заказ" Width="150" Height="45"/>
-            <Button x:Name="BtnOrderMore" IsEnabled="False" Style="{StaticResource SecondaryButtonStyle}" Margin="0,0,0,10" Content="Подробнее" Width="150" Height="45"/>
         </StackPanel>
         <DataGrid x:Name="OrderDataGrid" Grid.Row="1" Margin="10">
             <DataGrid.Columns>
@@ -28,7 +27,7 @@
                 <DataGridTextColumn Header="Сумма" Width=".7*" Binding="{Binding TotalPrice}"/>
                 <DataGridTextColumn Header="Дата" Width=".7*" Binding="{Binding Date}"/>
                 <DataGridTextColumn Header="Статус заказа" Width="*" Binding="{Binding OrderStatus}"/>
-                <DataGridTextColumn Header="Статус оплаты" Width="*" Binding="{Binding PaymentStatus}"/>
+                <DataGridTextColumn Header="Тип оплаты" Width="*" Binding="{Binding PaymentType}"/>
             </DataGrid.Columns>
         </DataGrid>
         <DataGrid x:Name="OrderPartsDataGrid" Grid.Row="2" Margin="10">

@@ -1,9 +1,10 @@
 <Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="История заказа" Height="650" Width="800"
+        Title="История заказа" Height="Auto" MaxHeight="650" Width="800"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None" 
         ResizeMode="NoResize"
+        Icon="icon.ico"
         AllowsTransparency="True"
         Background="Transparent"> 
     <Window.Resources>
@@ -37,13 +38,9 @@
                 </Grid>
             </Border>
             <Grid Grid.Row="1" Margin="10">
-                 <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
                 <StackPanel Grid.Row="0" Margin="10">
                     <TextBlock Text="История статуса заказа" Style="{StaticResource MainTextBlockStyle}" Foreground="{StaticResource ColorTextPrimary}"/>
-                    <DataGrid x:Name="StatusHistoryDataGrid" Height="200" Grid.Row="0">
+                    <DataGrid x:Name="StatusHistoryDataGrid" Grid.Row="0">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Дата" Width="*" Binding="{Binding Date}"/>
                             <DataGridTextColumn Header="Старое значение" Width="*" Binding="{Binding OldValue}"/>
@@ -51,16 +48,6 @@
                         </DataGrid.Columns>
                     </DataGrid>
                 </StackPanel>
-                <StackPanel Grid.Row="1" Margin="10">
-                    <TextBlock Text="История статуса оплаты" Style="{StaticResource MainTextBlockStyle}" Foreground="{StaticResource ColorTextPrimary}"/>
-                    <DataGrid x:Name="PaymentHistoryDataGrid"  Height="200" Grid.Row="0">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="Дата" Width="*" Binding="{Binding Date}"/>
-                            <DataGridTextColumn Header="Старое значение" Width="*" Binding="{Binding OldValue}"/>
-                            <DataGridTextColumn Header="Новое значение" Width="*" Binding="{Binding NewValue}"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
-                </StackPanel>    
             </Grid>
             <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,15,0">
                 <Button x:Name="BtnExit" Content="Закрыть" Style="{StaticResource MainButtonStyle}" Width="150" Height="45"/>

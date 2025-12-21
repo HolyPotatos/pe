@@ -18,7 +18,6 @@ class OrderHistory:
         self.btn_exit = self.window.FindName("BtnExit")
         self.border = self.window.FindName("HeaderBorder")
         self.order_status = self.window.FindName("StatusHistoryDataGrid")
-        self.payment_status = self.window.FindName("PaymentHistoryDataGrid")
         self.btn_close.Click += lambda s, e: self.window.Close()
         self.btn_exit.Click += lambda s, e: self.window.Close()
         self.border.MouseLeftButtonDown += self.drag_window
@@ -37,17 +36,6 @@ class OrderHistory:
         for i in rows:
             self.history_status.Add(models.OrderHistory(*i[:5]))
         self.order_status.ItemsSource = self.history_status
-        cur.execute("""SELECT psh.id, psh.date_time, pso.title, psn.title, psh.order_id
-                    FROM PaymentStatusHistory psh
-                    LEFT JOIN PaymentStatus pso ON pso.id = psh.old_value_id
-                    LEFT JOIN PaymentStatus psn ON psn.id = psh.new_value_id
-                    WHERE order_id = ?
-                    """, (oid,))
-        self.history_payment = List[Object]()
-        rows = cur.fetchall()
-        for i in rows:
-            self.history_payment.Add(models.OrderHistory(*i[:5]))
-        self.payment_status.ItemsSource = self.history_payment
         conn.close()
 
     def drag_window(self, sender, e):

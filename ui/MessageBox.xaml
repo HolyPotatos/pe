@@ -5,6 +5,7 @@
         WindowStyle="None" 
         ResizeMode="NoResize"
         AllowsTransparency="True"
+        Icon="icon.ico"
         Background="Transparent"> 
     <Window.Resources>
         <ResourceDictionary Source="ResourceDictionary.xaml"/>
