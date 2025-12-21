@@ -264,26 +264,40 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="MainDataGridStyle" TargetType="{x:Type DataGrid}">
-        <Setter Property="Background" Value="White"/>
-        <Setter Property="RowBackground" Value="White"/>
-        <Setter Property="AlternatingRowBackground" Value="#F2F2F2"/>
-        <Setter Property="HeadersVisibility" Value="Column"/>
-        <Setter Property="GridLinesVisibility" Value="Horizontal"/>
-        <Setter Property="HorizontalGridLinesBrush" Value="#E0E0E0"/>
-        <Setter Property="FontFamily" Value="Roboto"/>
-        <Setter Property="RowHeight" Value="30"/>
+    <Style TargetType="{x:Type DataGrid}">
+        <Setter Property="HorizontalScrollBarVisibility" Value="Disabled"/>
+        <Setter Property="Background" Value="{StaticResource ColorBackground}"/>
         <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="BorderBrush" Value="#Dcdcdc"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ColorBorder}"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Foreground" Value="{StaticResource ColorTextPrimary}"/>
+        <Setter Property="FontFamily" Value="Roboto"/>
+        <Setter Property="CanUserAddRows" Value="False"/>
+        <Setter Property="CanUserDeleteRows" Value="False"/>
+        <Setter Property="CanUserReorderColumns" Value="False"/>
+        <Setter Property="CanUserResizeColumns" Value="True"/>
+        <Setter Property="CanUserResizeRows" Value="False"/>
+        <Setter Property="CanUserSortColumns" Value="True"/>
+        <Setter Property="ScrollViewer.CanContentScroll" Value="False"/>
+        <Setter Property="AlternatingRowBackground" Value="{StaticResource ColorBackground}"/>
+        <Setter Property="RowBackground" Value="{StaticResource ColorSecondary}"/>
+        <Setter Property="SelectionMode" Value="Single"/>
+        <Setter Property="IsReadOnly" Value="True"/>
+        <Setter Property="HeadersVisibility" Value="Column"/>
+        <Setter Property="AutoGenerateColumns" Value="False"/>
+        <Setter Property="MinRowHeight" Value="30"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+
     </Style>
 
-    <Style x:Key="DataGridHeaderStyle" TargetType="{x:Type DataGridColumnHeader}">
+    <Style TargetType="{x:Type DataGridColumnHeader}">
+        <Setter Property="Padding" Value="5,0,0,0"/>
+        <Setter Property="Foreground" Value="{StaticResource ColorTextWhite}"/>
         <Setter Property="Background" Value="{StaticResource ColorPrimary}"/>
-        <Setter Property="Foreground" Value="White"/>
-        <Setter Property="Padding" Value="10,5"/>
-        <Setter Property="FontFamily" Value="Roboto"/>
-        <Setter Property="HorizontalContentAlignment" Value="Left"/>
-        <Setter Property="Height" Value="35"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ColorBorder}"/>
+        <Setter Property="Height" Value="30"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
     </Style>
 
     <Style x:Key="TextBoxStyle" TargetType="{x:Type TextBox}">

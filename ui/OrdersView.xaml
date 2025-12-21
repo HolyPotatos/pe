@@ -6,7 +6,7 @@
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="55"/>
             <RowDefinition Height="1.5*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
@@ -14,28 +14,29 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
-        <TextBox Style="{StaticResource TextBoxStyle}" Margin="10,10,10,10" Tag="Поиск..." Grid.ColumnSpan="2"/>
-        <StackPanel Grid.Column="1" Grid.Row="1" Margin="10">
+        <TextBox Style="{StaticResource TextBoxStyle}" Height="35" Margin="10,10,10,10" Tag="Поиск..." Grid.ColumnSpan="2"/>
+        <StackPanel Grid.Column="1" Grid.Row="1" Margin="10,10,20,10">
             <Button Style="{StaticResource SecondaryButtonStyle}" Margin="0,0,0,10" Content="Новый заказ" Width="150" Height="45"/>
             <Button Style="{StaticResource SecondaryButtonStyle}" Margin="0,0,0,10" Content="История заказа" Width="150" Height="45"/>
             <Button Style="{StaticResource SecondaryButtonStyle}" Margin="0,0,0,10" Content="Отменить заказ" Width="150" Height="45"/>
             <Button Style="{StaticResource SecondaryButtonStyle}" Margin="0,0,0,10" Content="Подробнее" Width="150" Height="45"/>
         </StackPanel>
-        <DataGrid Grid.Row="1" Style="{StaticResource MainDataGridStyle}" Margin="10">
+        <DataGrid x:Name="OrderDataGrid" Grid.Row="1" Margin="10">
             <DataGrid.Columns>
-                <DataGridTextColumn HeaderStyle="{StaticResource DataGridHeaderStyle}" Header="Номер заказа" Width="*"/>
-                <DataGridTextColumn HeaderStyle="{StaticResource DataGridHeaderStyle}" Header="Адрес доставки" Width="1.2*"/>
-                <DataGridTextColumn HeaderStyle="{StaticResource DataGridHeaderStyle}" Header="Статус заказа" Width="*"/>
-                <DataGridTextColumn HeaderStyle="{StaticResource DataGridHeaderStyle}" Header="Статус оплаты" Width="*"/>
-                <DataGridTextColumn HeaderStyle="{StaticResource DataGridHeaderStyle}" Header="Статус доставки" Width="*"/>
+                <DataGridTextColumn Header="№" Width=".3*" Binding="{Binding ID}"/>
+                <DataGridTextColumn Header="Адрес доставки" Width="1*" Binding="{Binding DeliveryAddress}"/>
+                <DataGridTextColumn Header="Сумма" Width=".7*" Binding="{Binding TotalPrice}"/>
+                <DataGridTextColumn Header="Дата" Width=".7*" Binding="{Binding Date}"/>
+                <DataGridTextColumn Header="Статус заказа" Width="*" Binding="{Binding OrderStatus}"/>
+                <DataGridTextColumn Header="Статус оплаты" Width="*" Binding="{Binding PaymentStatus}"/>
             </DataGrid.Columns>
         </DataGrid>
-        <DataGrid Grid.Row="2" Style="{StaticResource MainDataGridStyle}" Margin="10">
+        <DataGrid Grid.Row="2" Margin="10">
             <DataGrid.Columns>
-                <DataGridTextColumn HeaderStyle="{StaticResource DataGridHeaderStyle}" Header="SKU" Width="*"/>
-                <DataGridTextColumn HeaderStyle="{StaticResource DataGridHeaderStyle}" Header="Название" Width="1.5*"/>
-                <DataGridTextColumn HeaderStyle="{StaticResource DataGridHeaderStyle}" Header="Количество" Width="*"/>
-                <DataGridTextColumn HeaderStyle="{StaticResource DataGridHeaderStyle}" Header="Цена" Width="*"/>
+                <DataGridTextColumn Header="SKU" Width="*"/>
+                <DataGridTextColumn Header="Название" Width="1.5*"/>
+                <DataGridTextColumn Header="Количество" Width="*"/>
+                <DataGridTextColumn Header="Цена" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>
