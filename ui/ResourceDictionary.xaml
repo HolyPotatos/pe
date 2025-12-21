@@ -287,7 +287,6 @@
         <Setter Property="AutoGenerateColumns" Value="False"/>
         <Setter Property="MinRowHeight" Value="30"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
-
     </Style>
 
     <Style TargetType="{x:Type DataGridColumnHeader}">

@@ -39,18 +39,18 @@ class LoginWindow:
         auth_password = self.pass_box.Password
         conn = sqlite3.connect("autoparts_shop.db")
         cur = conn.cursor()
-        cur.execute("SELECT password_hash, salt FROM UserAuthData WHERE login = ?", (auth_login,))
+        cur.execute("SELECT user_id, password_hash, salt, is_active FROM UserAuthData WHERE login = ?", (auth_login,))
         data = cur.fetchone()
         conn.close()
         if data == None:
-            print("Неверный пароль")
+            show_message("Ошибка","Такого аккаунта нет!","error","ok")
             return
-        stored_hash, stored_salt = data
-        if password_check(stored_hash, stored_salt, auth_password):
+        id, stored_hash, stored_salt, is_active = data
+        if password_check(stored_hash, stored_salt, auth_password) and is_active == 1:
             from main_window import MainWindow
-            self.main_window = MainWindow()
+            self.main_window = MainWindow(id)
             self.main_window.show()
             self.window.Close()
         else:
-            temp = show_message("Ошибка","Вы плохо зашли!","error","yesno")
-            print(temp)
+            show_message("Ошибка","Такого аккаунта нет!","error","ok")
+            return

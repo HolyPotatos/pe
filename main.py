@@ -8,7 +8,7 @@ clr.AddReference("System.Data")
 from System.Threading import Thread, ThreadStart, ApartmentState
 from System.Windows import Application
 from login_window import LoginWindow
-
+ 
 
 def app_start():
     app = Application()
