@@ -1,0 +1,51 @@
+<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Новый пользователь" Height="480" Width="400"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None" 
+        AllowsTransparency="True" 
+        Background="Transparent"
+        ResizeMode="NoResize">
+
+    <Window.Resources>
+        <ResourceDictionary Source="ResourceDictionary.xaml"/>
+    </Window.Resources>
+
+    <Border Background="{StaticResource ColorBackground}" CornerRadius="11" BorderBrush="{StaticResource ColorBorder}" BorderThickness="1">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Border x:Name="TitleBar" Grid.Row="0" Background="{StaticResource ColorPrimary}" CornerRadius="10,10,0,0">
+                <Grid>
+                    <TextBlock Text="Новый пользователь" VerticalAlignment="Center" Margin="20,0,0,0" 
+                               FontSize="16" Foreground="{StaticResource ColorTextWhite}"/>
+                    <Button x:Name="BtnClose" HorizontalAlignment="Right" Style="{StaticResource ControlButtonStyle}" Content="✕"/>
+                </Grid>
+            </Border>
+
+            <Grid Grid.Row="1" Margin="20">
+                <StackPanel Orientation="Vertical">
+                    <ComboBox Height="35" Margin="0,0,0,10"/>
+                    <TextBox Style="{StaticResource TextBoxStyle}" Tag="Фамилия..." Margin="0,0,0,10"/>
+                    <TextBox Style="{StaticResource TextBoxStyle}" Tag="Имя..." Margin="0,0,0,10"/>
+                    <TextBox Style="{StaticResource TextBoxStyle}" Tag="Отчество..." Margin="0,0,0,10"/>
+                    <TextBox Style="{StaticResource TextBoxStyle}" Tag="EMail..." Margin="0,0,0,10"/>
+                    <TextBox Style="{StaticResource TextBoxStyle}" Tag="Телефон..." Margin="0,0,0,10"/>
+                    <TextBox Style="{StaticResource TextBoxStyle}" Tag="Логин..." Margin="0,0,0,10"/>
+                    <TextBox Style="{StaticResource TextBoxStyle}" Tag="Пароль..." Margin="0,0,0,10"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="1" Height="35" Margin="5,0,0,0" Style="{StaticResource MainButtonStyle}" Content="Создать"/>
+                        <Button Margin="0,0,5,0" Height="35" Style="{StaticResource SecondaryButtonStyle}" Content="Отмена"/>
+                    </Grid>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>
