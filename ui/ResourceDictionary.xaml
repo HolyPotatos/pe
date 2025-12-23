@@ -263,7 +263,37 @@
         </Style.Triggers>
     </Style>
 
+    <Style TargetType="{x:Type DataGridCell}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type DataGridCell}">
+                    <Border Background="{TemplateBinding Background}" 
+                        BorderBrush="{TemplateBinding BorderBrush}" 
+                        BorderThickness="{TemplateBinding BorderThickness}" 
+                        SnapsToDevicePixels="True">
+                        <ContentPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"/> 
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style TargetType="{x:Type DataGrid}">
+        <Style.Resources>
+            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" 
+                         Color="{StaticResource RawColorAccentHover}" />
+            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" 
+                         Color="{StaticResource RawColorTextWhite}" />
+
+            <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" 
+                         Color="{StaticResource RawColorAccent}" />
+            <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}" 
+                         Color="{StaticResource RawColorTextWhite}" />
+        </Style.Resources>
         <Setter Property="HorizontalScrollBarVisibility" Value="Disabled"/>
         <Setter Property="Background" Value="{StaticResource ColorBackground}"/>
         <Setter Property="BorderThickness" Value="1"/>
@@ -455,6 +485,7 @@
                         FontSize="14" Foreground="{StaticResource ColorTextPrimary}"/>
         </Grid>
     </DataTemplate>
+    
     <Style x:Key="MainComboBoxItemStyle" TargetType="{x:Type ComboBoxItem}">
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="Padding" Value="10,8"/>
@@ -602,6 +633,94 @@
                         <Trigger Property="IsGrouping" Value="true">
                             <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
                         </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="TabItemLeftStyle" TargetType="{x:Type TabItem}">
+        <Setter Property="Width" Value="150"/>
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="FontFamily" Value="Roboto"/>
+        <Setter Property="Foreground" Value="{StaticResource ColorTextWhite}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TabItem}">
+                    <Border Width="{TemplateBinding Width}" Background="{StaticResource ColorPrimary}" CornerRadius="5,0,0,0" Name="Panel" BorderThickness="1,1,0.5,1" BorderBrush="{StaticResource ColorBorder}">
+                        <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Header" Margin="10,2"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="Panel" Property="Background" Value="{StaticResource ColorAccent}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True"/>
+                                <Condition Property="IsSelected" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="Panel" Property="Background" Value="{StaticResource ColorPrimaryHover}"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+        <Style x:Key="TabItemMiddleStyle" TargetType="{x:Type TabItem}">
+        <Setter Property="Width" Value="150"/>
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="FontFamily" Value="Roboto"/>
+        <Setter Property="Foreground" Value="{StaticResource ColorTextWhite}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TabItem}">
+                    <Border Width="{TemplateBinding Width}" Background="{StaticResource ColorPrimary}" CornerRadius="0" Name="Panel" BorderThickness="1,1,0.5,1" BorderBrush="{StaticResource ColorBorder}">
+                        <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Header" Margin="10,2"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="Panel" Property="Background" Value="{StaticResource ColorAccent}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True"/>
+                                <Condition Property="IsSelected" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="Panel" Property="Background" Value="{StaticResource ColorPrimaryHover}"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+        <Style x:Key="TabItemRightStyle" TargetType="{x:Type TabItem}">
+        <Setter Property="Width" Value="150"/>
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="FontFamily" Value="Roboto"/>
+        <Setter Property="Foreground" Value="{StaticResource ColorTextWhite}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TabItem}">
+                    <Border Width="{TemplateBinding Width}" Background="{StaticResource ColorPrimary}" CornerRadius="0,5,0,0" Name="Panel" BorderThickness="1,1,0.5,1" BorderBrush="{StaticResource ColorBorder}">
+                        <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Header" Margin="10,2"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="Panel" Property="Background" Value="{StaticResource ColorAccent}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True"/>
+                                <Condition Property="IsSelected" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="Panel" Property="Background" Value="{StaticResource ColorPrimaryHover}"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

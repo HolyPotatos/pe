@@ -41,3 +41,19 @@ class NavigationItem:
         self.Id = id
         self.Title = title
         self.TypeLevel = type_level
+
+class User:
+    def __init__(self, uid, surname, name, patronymic, email, phone, role, login, is_active):
+        self.Id = uid
+        self.FIO = " ".join([surname, name, patronymic])
+        self.EMail = email
+        self.Phone = phone
+        self.Role = role
+        if login is None:
+            self.Login = "Без аккаунта"
+        else:
+            self.Login = login
+        if is_active == 1:
+            self.Status = "Активен"
+        else:
+            self.Status = "Заблокирован"

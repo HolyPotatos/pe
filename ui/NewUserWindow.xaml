@@ -28,21 +28,21 @@
 
             <Grid Grid.Row="1" Margin="20">
                 <StackPanel Orientation="Vertical">
-                    <ComboBox Height="35" Margin="0,0,0,10"/>
-                    <TextBox Style="{StaticResource TextBoxStyle}" Tag="Фамилия..." Margin="0,0,0,10"/>
-                    <TextBox Style="{StaticResource TextBoxStyle}" Tag="Имя..." Margin="0,0,0,10"/>
-                    <TextBox Style="{StaticResource TextBoxStyle}" Tag="Отчество..." Margin="0,0,0,10"/>
-                    <TextBox Style="{StaticResource TextBoxStyle}" Tag="EMail..." Margin="0,0,0,10"/>
-                    <TextBox Style="{StaticResource TextBoxStyle}" Tag="Телефон..." Margin="0,0,0,10"/>
-                    <TextBox Style="{StaticResource TextBoxStyle}" Tag="Логин..." Margin="0,0,0,10"/>
-                    <TextBox Style="{StaticResource TextBoxStyle}" Tag="Пароль..." Margin="0,0,0,10"/>
+                    <ComboBox x:Name="RoleComboBox" Height="35" Margin="0,0,0,10"/>
+                    <TextBox x:Name="SurnameTextBox" Style="{StaticResource TextBoxStyle}" Tag="Фамилия..." Margin="0,0,0,10"/>
+                    <TextBox x:Name="NameTextBox" Style="{StaticResource TextBoxStyle}" Tag="Имя..." Margin="0,0,0,10"/>
+                    <TextBox x:Name="PatronymicTextBox" Style="{StaticResource TextBoxStyle}" Tag="Отчество..." Margin="0,0,0,10"/>
+                    <TextBox x:Name="EMailTextBox" Style="{StaticResource TextBoxStyle}" Tag="EMail..." Margin="0,0,0,10"/>
+                    <TextBox x:Name="PhoneTextBox" Style="{StaticResource TextBoxStyle}" Tag="Телефон..." Margin="0,0,0,10"/>
+                    <TextBox x:Name="LoginTextBox" Style="{StaticResource TextBoxStyle}" Tag="Логин..." Margin="0,0,0,10"/>
+                    <TextBox x:Name="PasswordTextBox" Style="{StaticResource TextBoxStyle}" Tag="Пароль..." Margin="0,0,0,10"/>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <Button Grid.Column="1" Height="35" Margin="5,0,0,0" Style="{StaticResource MainButtonStyle}" Content="Создать"/>
-                        <Button Margin="0,0,5,0" Height="35" Style="{StaticResource SecondaryButtonStyle}" Content="Отмена"/>
+                        <Button x:Name="BtnSave" Grid.Column="1" Height="35" Margin="5,0,0,0" Style="{StaticResource MainButtonStyle}" Content="Создать"/>
+                        <Button x:Name="BtnCancel" Margin="0,0,5,0" Height="35" Style="{StaticResource SecondaryButtonStyle}" Content="Отмена"/>
                     </Grid>
                 </StackPanel>
             </Grid>

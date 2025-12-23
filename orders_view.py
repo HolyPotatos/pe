@@ -119,6 +119,3 @@ class OrdersView:
         from order_history import OrderHistory
         ohis = OrderHistory(self.selected_order_id)
         ohis.show()
-
-    def on_search_changed(self, s, e):
-        self.update_data_order
