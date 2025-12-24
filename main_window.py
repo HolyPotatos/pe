@@ -21,8 +21,10 @@ class MainWindow:
         self.invoice_content = InvoiceView(user_id)
         if self.user_role == 1:
             self.navigate(self.user_content.get_view())
+            self.rbtn_user.IsChecked = True
         else:
             self.navigate(self.order_content.get_view())
+            self.rbtn_order.IsChecked = True
         self.warehouse_content = WarehouseView(user_id, self.user_role)
         self.user_id = user_id
 
