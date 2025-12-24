@@ -11,7 +11,7 @@ class WarehouseView:
     def __init__(self, user_id, user_role):
         self.view = load_xaml("WarehouseView.xaml")
         self.set_events()
-        if user_role == 3:
+        if user_role == 3 or user_role == 1:
             self.set_storekeeper_events()
         self.user_id = user_id
     

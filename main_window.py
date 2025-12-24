@@ -1,5 +1,5 @@
 import sqlite3
-from System.Windows import WindowState
+from System.Windows import WindowState, Visibility
 from load_XAML import load_xaml
 from message_box import show_message
 from warehouse_view import WarehouseView
@@ -10,16 +10,19 @@ from invoice_view import InvoiceView
 class MainWindow:
     def __init__(self, user_id):
         self.window = load_xaml("MainWindow.xaml")
-        self.set_events()
-        self.order_content = OrdersView(user_id)
-        self.user_content = UserView(user_id)
-        self.invoice_content = InvoiceView(user_id)
-        self.navigate(self.order_content.get_view())
         conn = sqlite3.connect("autoparts_shop.db")
         cur = conn.cursor()
         cur.execute("SELECT role_id FROM User WHERE id = ?",(user_id,))
         self.user_role = int(cur.fetchone()[0])
         conn.close()
+        self.set_events()
+        self.order_content = OrdersView(user_id, self.user_role)
+        self.user_content = UserView(user_id)
+        self.invoice_content = InvoiceView(user_id)
+        if self.user_role == 1:
+            self.navigate(self.user_content.get_view())
+        else:
+            self.navigate(self.order_content.get_view())
         self.warehouse_content = WarehouseView(user_id, self.user_role)
         self.user_id = user_id
 
@@ -30,7 +33,7 @@ class MainWindow:
         self.rbtn_warehouse = self.window.FindName("RBtnWarehouseRadio")
         self.rbtn_order = self.window.FindName("RBtnOrderRadio")
         self.rbtn_user = self.window.FindName("RBtnUserRadio")
-        self.tbtn_invoice = self.window.FindName("RBtnInvoiceRadio")
+        self.rbtn_invoice = self.window.FindName("RBtnInvoiceRadio")
         self.btn_logout = self.window.FindName("BtnLogout")
         self.content_control = self.window.FindName("MainContentControl")
         self.btn_close.Click += lambda s, e: self.window.Close()
@@ -40,7 +43,16 @@ class MainWindow:
         self.rbtn_user.Click += lambda s, e: self.navigate(self.user_content.get_view())
         self.rbtn_order.Click += lambda s, e: self.navigate(self.order_content.get_view())
         self.rbtn_warehouse.Click += lambda s, e: self.navigate(self.warehouse_content.get_view())
-        self.tbtn_invoice.Click += lambda s, e: self.navigate(self.invoice_content.get_view())
+        self.rbtn_invoice.Click += lambda s, e: self.navigate(self.invoice_content.get_view())
+        if self.user_role == 1:
+            self.rbtn_order.Visibility = Visibility.Collapsed
+            self.rbtn_invoice.Visibility = Visibility.Collapsed
+        if self.user_role == 2:
+            self.rbtn_invoice.Visibility = Visibility.Collapsed
+            self.rbtn_user.Visibility = Visibility.Collapsed
+        if self.user_role == 3:
+            self.rbtn_user.Visibility = Visibility.Collapsed
+
 
 
     def maximized_window(self, sender, e):

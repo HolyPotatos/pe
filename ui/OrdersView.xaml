@@ -15,11 +15,22 @@
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
         <TextBox x:Name="SearchBar" Style="{StaticResource TextBoxStyle}" Height="35" Margin="10,10,20,10" Tag="Поиск..." Grid.ColumnSpan="2"/>
-        <StackPanel Grid.Column="1" Grid.Row="1" Margin="10,10,20,10">
-            <Button x:Name="BtnNewOrder" Style="{StaticResource SecondaryButtonStyle}" Margin="0,0,0,10" Content="Новый заказ" Width="150" Height="45"/>
-            <Button x:Name="BtnOrderHistory" IsEnabled="False" Style="{StaticResource SecondaryButtonStyle}" Margin="0,0,0,10" Content="История заказа" Width="150" Height="45"/>
-            <Button x:Name="BtnOrderCansel" IsEnabled="False" Style="{StaticResource SecondaryButtonStyle}" Margin="0,0,0,10" Content="Отменить заказ" Width="150" Height="45"/>
+        <StackPanel Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" Margin="10,10,20,10">
+            <Button x:Name="BtnNewOrder" Style="{StaticResource SecondaryButtonStyle}" Margin="0,0,0,10" Content="Новый заказ" Width="170" Height="45"/>
+            <Button x:Name="BtnOrderHistory" IsEnabled="False" Style="{StaticResource SecondaryButtonStyle}" Margin="0,0,0,10" Content="История заказа" Width="170" Height="45"/>
+            <Button x:Name="BtnOrderCansel" IsEnabled="False" Style="{StaticResource SecondaryButtonStyle}" Margin="0,0,0,10" Content="Отменить заказ" Width="170" Height="45"/>
+            <Button x:Name="BtnOrderStatusChange" IsEnabled="False" Style="{StaticResource SecondaryButtonStyle}" Margin="0,0,0,10" Content="Заказ укомплектован" Width="170" Height="45"/>
+            <GroupBox Header="Статус" FontFamily="Roboto" BorderBrush="{StaticResource ColorPrimary}" BorderThickness="2" FontSize="14" Foreground="{StaticResource ColorTextPrimary}">
+                <StackPanel x:Name="GroupBoxFilter">
+                    <CheckBox x:Name="status1" IsChecked="True" Content="В обработке" FontFamily="Roboto" Foreground="{StaticResource ColorTextPrimary}" Margin="5" FontSize="14"/>
+                    <CheckBox x:Name="status2" IsChecked="True" Content="Собран" FontFamily="Roboto" Foreground="{StaticResource ColorTextPrimary}" Margin="5" FontSize="14"/>
+                    <CheckBox x:Name="status3" IsChecked="True" Content="Передан в доставку" FontFamily="Roboto" Foreground="{StaticResource ColorTextPrimary}" Margin="5" FontSize="14"/>
+                    <CheckBox x:Name="status4" IsChecked="True" Content="Выполнен"  FontFamily="Roboto" Foreground="{StaticResource ColorTextPrimary}" Margin="5" FontSize="14"/>
+                    <CheckBox x:Name="status5" IsChecked="True" Content="Отменён" FontFamily="Roboto" Foreground="{StaticResource ColorTextPrimary}" Margin="5" FontSize="14"/>
+                </StackPanel>
+            </GroupBox>
         </StackPanel>
+
         <DataGrid x:Name="OrderDataGrid" Grid.Row="1" Margin="10">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="№" Width=".3*" Binding="{Binding ID}"/>

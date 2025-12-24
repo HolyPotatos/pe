@@ -14,9 +14,15 @@
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
         <TextBox x:Name="SearchBar" Style="{StaticResource TextBoxStyle}" Height="35" Margin="10,10,20,10" Tag="Поиск..." Grid.ColumnSpan="2"/>
-        <StackPanel Grid.Column="1" Grid.Row="1" Margin="10,10,20,10">
+        <StackPanel Grid.Column="1" Grid.RowSpan="2"  Grid.Row="1" Margin="10,10,20,10">
             <Button x:Name="BtnNewUser" Style="{StaticResource SecondaryButtonStyle}" Margin="0,0,0,10" Content="Создать пользователя" Width="170" Height="45"/>
             <Button x:Name="BtnBlockUser" IsEnabled="False" Style="{StaticResource SecondaryButtonStyle}" Margin="0,0,0,10" Content="Заблокировать" Width="170" Height="45"/>
+            <GroupBox Header="Статус" FontFamily="Roboto" BorderBrush="{StaticResource ColorPrimary}" BorderThickness="2" FontSize="14" Foreground="{StaticResource ColorTextPrimary}">
+                <StackPanel x:Name="GroupBoxFilter">
+                    <CheckBox x:Name="status1" IsChecked="True" Content="Активен" FontFamily="Roboto" Foreground="{StaticResource ColorTextPrimary}" Margin="5" FontSize="14"/>
+                    <CheckBox x:Name="status0" IsChecked="True" Content="Заблокирован" FontFamily="Roboto" Foreground="{StaticResource ColorTextPrimary}" Margin="5" FontSize="14"/>
+                </StackPanel>
+            </GroupBox>
         </StackPanel>
         <DataGrid x:Name="UserDataGrid" Grid.Row="1" Margin="10">
             <DataGrid.Columns>

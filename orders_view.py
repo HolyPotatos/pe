@@ -3,15 +3,17 @@ import models
 from datetime import datetime
 from load_XAML import load_xaml
 from System.Collections.Generic import List
+from System.Windows import Visibility
 from System import Object
 from message_box import show_message
 
 
 class OrdersView:
-    def __init__(self, user_id):
+    def __init__(self, user_id, user_role):
         self.view = load_xaml("OrdersView.xaml")
-        self.set_events()
+        self.user_role = user_role
         self.user_id = user_id
+        self.set_events()
 
     def set_events(self):
         self.selected_order_id = -1
@@ -20,7 +22,26 @@ class OrdersView:
         self.btn_new_order = self.view.FindName("BtnNewOrder")
         self.btn_order_cancel = self.view.FindName("BtnOrderCansel")
         self.btn_order_history = self.view.FindName("BtnOrderHistory")
+        self.btn_order_status_change = self.view.FindName("BtnOrderStatusChange")
         self.tb_search = self.view.FindName("SearchBar")
+        self.status1 = self.view.FindName("status1")
+        self.status2 = self.view.FindName("status2")
+        self.status3 = self.view.FindName("status3")
+        self.status4 = self.view.FindName("status4")
+        self.status5 = self.view.FindName("status5")
+        if self.user_role == 3:
+            self.status4.Visibility = Visibility.Collapsed
+            self.status5.Visibility = Visibility.Collapsed
+            self.btn_new_order.Visibility = Visibility.Collapsed
+            self.btn_order_cancel.Visibility = Visibility.Collapsed
+        elif self.user_role == 2:
+            self.btn_order_status_change.Visibility = Visibility.Collapsed
+        self.status4.Click += lambda s, e: self.update_data_order()
+        self.status5.Click += lambda s, e: self.update_data_order()
+        self.status1.Click += lambda s, e: self.update_data_order()
+        self.status2.Click += lambda s, e: self.update_data_order()
+        self.status3.Click += lambda s, e: self.update_data_order()
+        self.btn_order_status_change.Click += lambda s, e: self.update_status()
         self.tb_search.TextChanged += lambda s, e: self.update_data_order()
         self.order_datagrid.SelectionChanged += self.on_order_selected
         self.btn_order_cancel.Click += self.on_order_cansel_click
@@ -43,11 +64,40 @@ class OrdersView:
         if selected_item is None:
             self.btn_order_cancel.IsEnabled = False
             self.btn_order_history.IsEnabled = False
+            if self.user_role == 3:
+                self.btn_order_status_change.IsEnabled = False
         else:
             self.btn_order_cancel.IsEnabled = True
             self.btn_order_history.IsEnabled = True
             self.update_data_order_parts(selected_item.ID)
             self.selected_order_id = selected_item.ID
+            if self.user_role == 3:
+                os = self.order_datagrid.SelectedItem.OrderStatus
+                self.btn_order_status_change.IsEnabled = True
+                if os == "В обработке": self.btn_order_status_change.Content = "Заказ собран"
+                if os == "Собран": self.btn_order_status_change.Content = "Закан в доставке"
+                if os == "Передан в доставку": self.btn_order_status_change.Content = "Заказ доставлен"
+
+    def update_status(self):
+        if self.order_datagrid.SelectedItem.OrderStatus == "В обработке":
+            message = "Вы подтверждаете что заказ собран и готов к отгрузке?"
+        elif self.order_datagrid.SelectedItem.OrderStatus == "Собран":
+            message = "Вы подтверждаете что заказ передан в доставку?"
+        elif self.order_datagrid.SelectedItem.OrderStatus == "Передан в доставку":
+            message = "Вы подтверждаете что покупатель получил товар?"
+        if show_message("Предупреждение",message,"warning","yesno") == "yes":
+            conn = sqlite3.connect("autoparts_shop.db")
+            cur = conn.cursor()
+            current_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            old_value_id = int(cur.execute("SELECT order_status_id FROM Orders WHERE id = ?", (self.selected_order_id,)).fetchone()[0])
+            new_value_id = old_value_id + 1
+            cur.execute("INSERT INTO OrderStatusHistory (date_time, old_value_id, new_value_id, order_id) VALUES (?,?,?,?) ", (current_date, old_value_id, new_value_id, self.selected_order_id))
+            cur.execute("UPDATE Orders SET order_status_id = ? WHERE id = ?", (new_value_id, self.selected_order_id,))
+            conn.commit()
+            conn.close
+            self.update_data_order()
+        else:
+            return
 
     def update_data_order_parts(self, order_id):
         conn = sqlite3.connect("autoparts_shop.db")
@@ -65,28 +115,40 @@ class OrdersView:
         conn.close()
 
     def update_data_order(self):
+        filter_status = []
+        if self.status1.IsChecked: filter_status.append("1")
+        if self.status2.IsChecked: filter_status.append("2")
+        if self.status3.IsChecked: filter_status.append("3")
+        if self.user_role != 3:
+            if self.status4.IsChecked: filter_status.append("4")
+            if self.status5.IsChecked: filter_status.append("5")
+        placeholders = ','.join('?' for _ in filter_status)
+        if filter_status.count == 0:
+            return
         conn = sqlite3.connect("autoparts_shop.db")
         cur = conn.cursor()
         if self.tb_search.Text != "":
-            cur.execute("""SELECT o.id, o.date, o.delivery_address, o.seller_id, o.storekeeper_id, 
+            cur.execute(f"""SELECT o.id, o.date, o.delivery_address, o.seller_id, o.storekeeper_id, 
                     dt.title, os.title, pt.title, 
                     (SELECT SUM(op.unit_retail_price * op.count) FROM OrderParts op WHERE order_id = o.id) as total_price
                     FROM Orders o
                     JOIN DeliveryType dt ON dt.id = o.delivery_type_id
                     JOIN OrderStatus os ON os.id = o.order_status_id
                     JOIN PaymentType pt ON pt.id = o.payment_type_id
-                    WHERE o.delivery_address LIKE ?
+                    WHERE o.delivery_address LIKE ? AND o.order_status_id IN ({placeholders})
                     ORDER BY o.date DESC, os.title ASC 
-                    """, (f"%{self.tb_search.Text}%",))
+                    """, ([f"%{self.tb_search.Text}%"] + filter_status))
         else:
-            cur.execute("""SELECT o.id, o.date, o.delivery_address, o.seller_id, o.storekeeper_id, 
+            cur.execute(f"""SELECT o.id, o.date, o.delivery_address, o.seller_id, o.storekeeper_id, 
                     dt.title, os.title, pt.title, 
                     (SELECT SUM(op.unit_retail_price * op.count) FROM OrderParts op WHERE order_id = o.id) as total_price
                     FROM Orders o
                     JOIN DeliveryType dt ON dt.id = o.delivery_type_id
                     JOIN OrderStatus os ON os.id = o.order_status_id
                     JOIN PaymentType pt ON pt.id = o.payment_type_id
-                    ORDER BY o.date DESC, os.title ASC""")
+                    WHERE o.order_status_id IN ({placeholders})
+                    ORDER BY o.date DESC, os.title ASC""",
+                    filter_status)
             
         self.orders = List[Object]()
         rows = cur.fetchall()
