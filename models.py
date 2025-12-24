@@ -19,6 +19,19 @@ class OrderParts:
         self.Count = count
         self.UnitRetailPrice = unit_retail_price
 
+class Invoice:
+    def __init__(self, iid, date, supplier):
+        self.ID = iid
+        self.Date = date
+        self.Supplier = supplier
+
+class InvoiceParts:
+    def __init__(self, part_id, sku, title, count):
+        self.PartID = part_id
+        self.SKU = sku
+        self.Title = title
+        self.Count = count
+
 class OrderHistory:
     def __init__(self, id, date_time, old_value, new_value, order_id):
         self.ID = id

@@ -70,20 +70,27 @@ class NewUserWindow:
         role_id = self.cmb_role.SelectedItem.Id
         conn = sqlite3.connect("autoparts_shop.db")
         cur = conn.cursor()
+        temp = cur.execute("""SELECT u.id FROM User u
+                    JOIN UserAuthData ud ON ud.user_id = u.id WHERE u.email = ?
+                    OR u.phone_number = ? or ud.login = ?""",
+                    (self.txt_email.Text, self.txt_phone.Text, self.txt_login.Text)).fetchall()
+        if temp:
+            show_message("Ошибка", "Пользователь с такими данными уже существует", "error", "ok")
+            return
         
         try:
             cur.execute("BEGIN TRANSACTION")
             cur.execute("""
                 INSERT INTO User (name, surname, patronymic, email, phone_number, role_id)
                 VALUES (?, ?, ?, ?, ?, ?)""", 
-                (self.txt_name.Text, self.txt_surname.Text, self.txt_patronymic.Text, self.txt_email.Text, self.txt_phone, role_id))
+                (self.txt_name.Text, self.txt_surname.Text, self.txt_patronymic.Text, self.txt_email.Text, self.txt_phone.Text, role_id))
             
             user_id = cur.lastrowid
             password_hash, salt = security.password_hash(self.txt_password.Text)
             cur.execute("""INSERT INTO UserAuthData (user_id, login, password_hash, salt)
             VALUES (?, ?, ?, ?)""", (user_id, self.txt_login.Text, password_hash, salt))
             conn.commit()
-            show_message("Успех", f"Пользователь №{order_id} успешно создан!", "info", "ok")
+            show_message("Успех", f"Пользователь №{user_id} успешно создан!", "info", "ok")
             self.window.Close()
             
         except Exception as ex:

@@ -14,6 +14,7 @@ class UserView:
 
     def set_events(self):
         self.selected_user_id = -1
+        self.selected_item = None
         self.user_datagrid = self.view.FindName("UserDataGrid")
         self.btn_new_user = self.view.FindName("BtnNewUser")
         self.btn_block_user = self.view.FindName("BtnBlockUser")
@@ -35,12 +36,16 @@ class UserView:
 
     def user_selected(self, s, e):
         grid = s 
-        selected_item = grid.SelectedItem
-        if selected_item is None:
+        self.selected_item = grid.SelectedItem
+        if self.selected_item is None:
             self.btn_block_user.IsEnabled = False
         else:
             self.btn_block_user.IsEnabled = True
-            self.selected_user_id = selected_item.Id
+            self.selected_user_id = self.selected_item.Id
+            if grid.SelectedItem.Status == "Заблокирован":
+                self.btn_block_user.Content = "Разблокировать"
+            else:
+                self.btn_block_user.Content = "Заблокировать"
 
     def update_data_user(self):
         conn = sqlite3.connect("autoparts_shop.db")
@@ -52,13 +57,15 @@ class UserView:
                     LEFT JOIN UserAuthData ud ON ud.user_id = u.id
                     LEFT JOIN UserRole ur ON ur.id = u.role_id
                     WHERE u.name LIKE ? OR u.surname LIKE ? OR u.patronymic LIKE ?
+                    ORDER BY ud.is_active DESC
                     """, (f"%{self.tb_search.Text}%",f"%{self.tb_search.Text}%",f"%{self.tb_search.Text}%"))
         else:
             cur.execute("""SELECT u.id, u.surname, u.name, u.patronymic, u.email, 
                     u.phone_number, ur.title, ud.login, ud.is_active 
                     FROM User u
                     LEFT JOIN UserAuthData ud ON ud.user_id = u.id
-                    LEFT JOIN UserRole ur ON ur.id = u.role_id""")
+                    LEFT JOIN UserRole ur ON ur.id = u.role_id
+                    ORDER BY ud.is_active DESC""")
             
         self.users = List[Object]()
         rows = cur.fetchall()
@@ -71,12 +78,20 @@ class UserView:
         conn.close()
     
     def block_user_click(self, s, e):
-        if show_message("Предупреждение","Вы уверены что хотите заблокировать пользователя?","warning","yesno") == "yes":
+        if self.selected_item.Status == "Заблокирован":
+            message = "Вы уверены что хотите разблокировать пользователя?"
+        else:
+            message = "Вы уверены что хотите заблокировать пользователя?"
+        if show_message("Предупреждение",message,"warning","yesno") == "yes":
             conn = sqlite3.connect("autoparts_shop.db")
             cur = conn.cursor()
-            cur.execute("UPDATE UserAuthData SET is_active = 0 WHERE user_id = ?", (self.selected_user_id,))
+            if  self.selected_item.Status == "Заблокирован":
+                cur.execute("UPDATE UserAuthData SET is_active = 1 WHERE user_id = ?", (self.selected_user_id,))
+            else:
+                cur.execute("UPDATE UserAuthData SET is_active = 0 WHERE user_id = ?", (self.selected_user_id,))
             conn.commit()
             conn.close
             self.update_data_user()
         else:
             return
+        

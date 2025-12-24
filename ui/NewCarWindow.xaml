@@ -1,0 +1,68 @@
+<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Новое авто" Height="300" Width="400"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None" 
+        AllowsTransparency="True" 
+        Background="Transparent"
+        ResizeMode="NoResize">
+
+    <Window.Resources>
+        <ResourceDictionary Source="ResourceDictionary.xaml"/>
+    </Window.Resources>
+
+    <Border Background="{StaticResource ColorBackground}" CornerRadius="11" BorderBrush="{StaticResource ColorBorder}" BorderThickness="1">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Border x:Name="TitleBar" Grid.Row="0" Background="{StaticResource ColorPrimary}" CornerRadius="10,10,0,0">
+                <Grid>
+                    <TextBlock Text="Новое авто" VerticalAlignment="Center" Margin="20,0,0,0" 
+                               FontSize="16" Foreground="{StaticResource ColorTextWhite}"/>
+                    <Button x:Name="BtnClose" HorizontalAlignment="Right" Style="{StaticResource ControlButtonStyle}" Content="✕"/>
+                </Grid>
+            </Border>
+
+            <Grid Grid.Row="1" Margin="20">
+                <StackPanel Orientation="Vertical">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <ComboBox x:Name="CarBrandComboBox" Height="35" Margin="0,0,0,10"/>
+                        <Button x:Name="BtnAddCarBrand" VerticalAlignment="Top" Grid.Column="1" Height="35" Margin="10,0,0,0" Style="{StaticResource MainButtonStyle}" Content="Добавить"/>
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <ComboBox x:Name="CarModelComboBox" Height="35" Margin="0,0,0,10"/>
+                        <Button x:Name="BtnAddCarModel" VerticalAlignment="Top" Grid.Column="1" Height="35" Margin="10,0,0,0" Style="{StaticResource MainButtonStyle}" Content="Добавить"/>
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <ComboBox x:Name="CarGenerationComboBox" Height="35" Margin="0,0,0,10"/>
+                        <Button x:Name="BtnAddCarGeneration" VerticalAlignment="Top" Grid.Column="1" Height="35" Margin="10,0,0,0" Style="{StaticResource MainButtonStyle}" Content="Добавить"/>
+                    </Grid>
+                    <TextBox x:Name="ConfigTextBox" Style="{StaticResource TextBoxStyle}" Tag="Конфигурация..." Margin="0,0,0,10"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Button x:Name="BtnSave" Grid.Column="1" Height="35" Margin="5,0,0,0" Style="{StaticResource MainButtonStyle}" Content="Сохранить"/>
+                        <Button x:Name="BtnCancel" Margin="0,0,5,0" Height="35" Style="{StaticResource SecondaryButtonStyle}" Content="Отмена"/>
+                    </Grid>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>

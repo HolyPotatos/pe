@@ -76,7 +76,7 @@ class OrdersView:
                     JOIN OrderStatus os ON os.id = o.order_status_id
                     JOIN PaymentType pt ON pt.id = o.payment_type_id
                     WHERE o.delivery_address LIKE ?
-                    ORDER BY o.date, os.title DESC
+                    ORDER BY o.date DESC, os.title ASC 
                     """, (f"%{self.tb_search.Text}%",))
         else:
             cur.execute("""SELECT o.id, o.date, o.delivery_address, o.seller_id, o.storekeeper_id, 
@@ -107,8 +107,14 @@ class OrdersView:
             if old_value_id == 5:
                 show_message("Ошибка","Заказ уже отменён","error","ok")
                 return
+            if old_value_id == 4:
+                show_message("Ошибка","Заказ уже выполнен","error","ok")
+                return
             cur.execute("INSERT INTO OrderStatusHistory (date_time, old_value_id, new_value_id, order_id) VALUES (?,?,?,?) ", (current_date, old_value_id, 5, self.selected_order_id))
             cur.execute("UPDATE Orders SET order_status_id = 5 WHERE id = ?", (self.selected_order_id,))
+            parts = cur.execute("SELECT part_id, count FROM OrderParts WHERE order_id = ?",(self.selected_order_id,)).fetchall()
+            for part in parts:
+                cur.execute("UPDATE AutoPart SET stock = stock + ? WHERE id = ?", (part[1], part[0]))
             conn.commit()
             conn.close
             self.update_data_order()

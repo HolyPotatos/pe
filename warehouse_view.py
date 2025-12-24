@@ -8,9 +8,11 @@ from message_box import show_message
 
 
 class WarehouseView:
-    def __init__(self, user_id):
+    def __init__(self, user_id, user_role):
         self.view = load_xaml("WarehouseView.xaml")
         self.set_events()
+        if user_role == 3:
+            self.set_storekeeper_events()
         self.user_id = user_id
     
     def get_view(self):
@@ -28,6 +30,7 @@ class WarehouseView:
         self.cat_dg_parts = self.view.FindName("CatPartsGrid")
         self.tab_control = self.view.FindName("MainTabControl")
         self.search = self.view.FindName("SearchBar")
+        self.selected_part_item = -1
         self.search.TextChanged += self.warehouse_search_changed
         self.nav_list.SelectionChanged += self.on_nav_item_selected
         self.btn_back.Click += self.on_back_click
@@ -35,7 +38,46 @@ class WarehouseView:
         self.cat_btn_back.Click += self.on_cat_back_click
         self.load_all_parts(None)
         self.reset_car_navigation()
-        self.reset_cat_navigation() 
+        self.reset_cat_navigation()
+
+    def set_storekeeper_events(self):
+        self.btn_add_part = self.view.FindName("BtnPartAdd")
+        self.btn_edit_part = self.view.FindName("BtnPartEdit")
+        self.btn_add_auto = self.view.FindName("BtnAutoAdd")
+        self.dg_all_parts.SelectionChanged += self.dg_all_parts_selection_changed
+        self.btn_add_auto.Visibility = Visibility.Visible
+        self.btn_add_part.Visibility = Visibility.Visible
+        self.btn_edit_part.Visibility = Visibility.Visible
+        self.btn_add_auto.Click += self.on_add_auto
+        self.btn_add_part.Click += self.on_add_part
+        self.btn_edit_part.Click += self.on_edit_part
+
+    def dg_all_parts_selection_changed(self, s, e):
+        grid = s 
+        selected_item = grid.SelectedItem
+        if selected_item is None:
+            self.btn_edit_part.IsEnabled = False
+        else:
+            self.btn_edit_part.IsEnabled = True
+            self.selected_part_item = selected_item.Id
+
+    def on_add_part(self, s, e):
+        from new_part_window import NewPartWindow
+        npw = NewPartWindow(self.user_id)
+        npw.show()
+        self.load_all_parts(None)
+
+    def on_edit_part(self, s, e):
+        from new_part_window import NewPartWindow
+        npw = NewPartWindow(self.user_id, self.selected_part_item)
+        npw.show()
+        self.load_all_parts(None)
+
+    def on_add_auto(self, s, e):
+        from new_car_window import NewCarWindow
+        ncw = NewCarWindow(self.user_id)
+        ncw.show()
+        self.reset_car_navigation()
 
     def warehouse_search_changed(self, s, e):
         if self.search.Text == "":
@@ -127,15 +169,15 @@ class WarehouseView:
         params = ()
 
         if level == 0: 
-            query = "SELECT id, title FROM CarBrand" 
+            query = "SELECT id, title FROM CarBrand ORDER BY title" 
         elif level == 1: 
-            query = "SELECT id, title FROM CarModel WHERE brand_id = ?"
+            query = "SELECT id, title FROM CarModel WHERE brand_id = ? ORDER BY title"
             params = (parent_id,)
         elif level == 2: 
-            query = "SELECT id, title FROM CarGeneration WHERE model_id = ?"
+            query = "SELECT id, title FROM CarGeneration WHERE model_id = ? ORDER BY title"
             params = (parent_id,)
         elif level == 3:
-            query = "SELECT id, description FROM CarConfig WHERE generation_id = ?"
+            query = "SELECT id, description FROM CarConfig WHERE generation_id = ? ORDER BY description"
             params = (parent_id,)
 
         try:

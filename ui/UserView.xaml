@@ -15,8 +15,8 @@
         </Grid.ColumnDefinitions>
         <TextBox x:Name="SearchBar" Style="{StaticResource TextBoxStyle}" Height="35" Margin="10,10,20,10" Tag="Поиск..." Grid.ColumnSpan="2"/>
         <StackPanel Grid.Column="1" Grid.Row="1" Margin="10,10,20,10">
-            <Button x:Name="BtnNewUser" Style="{StaticResource SecondaryButtonStyle}" Margin="0,0,0,10" Content="Новый заказ" Width="150" Height="45"/>
-            <Button x:Name="BtnBlockUser" IsEnabled="False" Style="{StaticResource SecondaryButtonStyle}" Margin="0,0,0,10" Content="История заказа" Width="150" Height="45"/>
+            <Button x:Name="BtnNewUser" Style="{StaticResource SecondaryButtonStyle}" Margin="0,0,0,10" Content="Создать пользователя" Width="170" Height="45"/>
+            <Button x:Name="BtnBlockUser" IsEnabled="False" Style="{StaticResource SecondaryButtonStyle}" Margin="0,0,0,10" Content="Заблокировать" Width="170" Height="45"/>
         </StackPanel>
         <DataGrid x:Name="UserDataGrid" Grid.Row="1" Margin="10">
             <DataGrid.Columns>
@@ -24,7 +24,7 @@
                 <DataGridTextColumn Header="EMail" Width="*" Binding="{Binding EMail}"/>
                 <DataGridTextColumn Header="Телефон" Width="*" Binding="{Binding Phone}"/>
                 <DataGridTextColumn Header="Роль" Width="*" Binding="{Binding Role}"/>
-                <DataGridTextColumn Header="Логин" Width="*" Binding="{Binding Role}"/>
+                <DataGridTextColumn Header="Логин" Width="*" Binding="{Binding Login}"/>
                 <DataGridTextColumn Header="Статус" Width="*" Binding="{Binding Status}"/>
             </DataGrid.Columns>
         </DataGrid>

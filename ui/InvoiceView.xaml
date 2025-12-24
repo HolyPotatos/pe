@@ -1,0 +1,35 @@
+<UserControl xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             MinHeight="600" MinWidth="800">
+    <UserControl.Resources>
+        <ResourceDictionary Source="ResourceDictionary.xaml"/>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="1" Grid.Row="0" Margin="10,10,20,10">
+            <Button x:Name="BtnNewInvoice" Style="{StaticResource SecondaryButtonStyle}" Margin="0,0,0,10" Content="Новый приход" Width="170" Height="45"/>
+            <Button x:Name="BtnShowPDF" IsEnabled="False" Style="{StaticResource SecondaryButtonStyle}" Margin="0,0,0,10" Content="Сохранить накладную" Width="170" Height="45"/>
+        </StackPanel>
+        <DataGrid x:Name="InvoiceDataGrid" Grid.Row="0" Margin="10">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="№" Width=".3*" Binding="{Binding ID}"/>
+                <DataGridTextColumn Header="Дата" Width=".7*" Binding="{Binding Date}"/>
+                <DataGridTextColumn Header="Поставщик" Width="*" Binding="{Binding Supplier}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <DataGrid x:Name="InvoicePartsDataGrid" Grid.Row="1" Margin="10">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="SKU" Width="*" Binding="{Binding SKU}"/>
+                <DataGridTextColumn Header="Название" Width="1.5*" Binding="{Binding Title}"/>
+                <DataGridTextColumn Header="Количество" Width="*" Binding="{Binding Count}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>
