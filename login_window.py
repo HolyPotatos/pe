@@ -37,6 +37,9 @@ class LoginWindow:
     def on_login_click(self, sender, e):
         auth_login = self.login_box.Text
         auth_password = self.pass_box.Password
+        if auth_login == "" or auth_password == "":
+            show_message("Ошибка","Необходимо заполнить все поля.","error","ok")
+            return
         conn = sqlite3.connect("autoparts_shop.db")
         cur = conn.cursor()
         cur.execute("SELECT user_id, password_hash, salt, is_active FROM UserAuthData WHERE login = ?", (auth_login,))

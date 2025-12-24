@@ -1,5 +1,4 @@
 import sqlite3
-import os
 from datetime import datetime
 from load_XAML import load_xaml
 from System.Collections.Generic import List
